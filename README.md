@@ -1,46 +1,118 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Фронтенд для анализа скорости чтения текста и файлов
 
-## Available Scripts
+Этот проект представляет собой фронтенд-приложение, созданное на основе **React** и **TypeScript**. Оно предназначено для взаимодействия с бекендом через [API](https://github.com/wrongjunior/ltm-api), позволяя пользователям отправлять текст или загружать файлы для анализа. Бекенд выполняет анализ текста, включая расчёт времени чтения, количество слов, предложений, слогов и индекса Флеша-Кинкейда.
 
-In the project directory, you can run:
+## Содержание
 
-### `npm start`
+- [Начало работы](#начало-работы)
+- [Возможности](#возможности)
+- [Установка](#установка)
+- [Доступные скрипты](#доступные-скрипты)
+- [Взаимодействие с API](#взаимодействие-с-api)
+- [Используемые технологии](#используемые-технологии)
+- [Структура проекта](#структура-проекта)
+- [Лицензия](#лицензия)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Начало работы
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Следуйте этим инструкциям, чтобы развернуть проект локально для разработки и тестирования.
 
-### `npm test`
+### Необходимые инструменты
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Перед началом убедитесь, что у вас установлены следующие инструменты:
 
-### `npm run build`
+- **Node.js** (v12 или выше)
+- **npm** или **yarn**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Установка
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/wrongjunior/ltm-front.git
+   cd ltm-front
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Установите зависимости:
+   ```bash
+   npm install
+   # или
+   yarn install
+   ```
 
-### `npm run eject`
+3. Запустите сервер разработки:
+   ```bash
+   npm start
+   # или
+   yarn start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Откройте [http://localhost:3000](http://localhost:3000) в вашем браузере для просмотра приложения.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Возможности
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **Анализ текста**: Пользователи могут ввести текст, и приложение выполнит анализ текста на основании времени чтения, количества слов, предложений, слогов и индекса Флеша-Кинкейда.
+- **Загрузка файлов**: Пользователи могут загружать `.txt` файлы для анализа.
+- **Мгновенная обратная связь**: Приложение автоматически обновляется при внесении изменений в код.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Доступные скрипты
 
-## Learn More
+В директории проекта доступны следующие команды:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `npm start`: Запускает приложение в режиме разработки.  Откройте [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
+  
+- `npm test`: Запускает тестовый раннер в интерактивном режиме.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm run build`: Собирает оптимизированную версию приложения в папке `build`.
+
+- `npm run eject`: **Внимание**: после выполнения команды `eject` отменить изменения будет невозможно. Команда `eject` копирует все конфигурационные файлы и зависимости в проект, что позволяет полностью контролировать их.
+
+## Взаимодействие с API
+
+Приложение взаимодействует с бекендом с помощью **Axios**. Основные запросы API:
+
+1. **Анализ текста**:
+   - Endpoint: `POST /estimate/reading-time`
+   - Пример тела запроса:
+     ```json
+     {
+       "text": "Пример текста для анализа",
+       "readingSpeed": 200,
+       "hasVisuals": false,
+       "workerCount": 4
+     }
+     ```
+
+2. **Анализ загруженного файла**:
+   - Endpoint: `POST /estimate/upload`
+   - Тело запроса: `FormData` с файлом.
+
+Ответы от сервера содержат результаты анализа текста, такие как время чтения, количество слов и индекс Флеша-Кинкейда.
+
+## Используемые технологии
+
+- **React**: библиотека для создания пользовательских интерфейсов.
+- **TypeScript**: надстройка над JavaScript, обеспечивающая типизацию.
+- **Axios**: HTTP клиент для отправки запросов на бекенд.
+- **CSS**: стилизация компонентов и интерфейса.
+
+## Структура проекта
+
+```
+/src
+  /components
+    - AnalysisResults.tsx      # Компонент для отображения результатов анализа
+    - FileUploader.tsx         # Компонент для загрузки файлов
+    - TextAnalyzerForm.tsx     # Компонент для анализа текста
+    - FormStyles.css           # Стили для форм
+    - ResultsStyles.css        # Стили для отображения результатов
+  /api
+    - api.ts                   # Конфигурация Axios для взаимодействия с API
+  App.tsx                      # Главный компонент приложения и точка входа
+
+```
+
+
+## Лицензия
+
+Этот проект лицензирован на условиях лицензии MIT — подробности смотрите в файле [LICENSE](LICENSE).
